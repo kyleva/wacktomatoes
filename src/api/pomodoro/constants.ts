@@ -1,4 +1,4 @@
-export const COUNTDOWN = {
+export const COUNTDOWN_TYPES = {
   BREAK: 'BREAK',
   POMODORO: 'POMODORO',
 };

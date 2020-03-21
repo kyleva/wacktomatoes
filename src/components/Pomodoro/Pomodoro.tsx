@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 
 /** Our code */
 // Constants
-import { COUNTDOWN } from '../../api/pomodoro/constants';
+import { COUNTDOWN_TYPES } from '../../api/pomodoro/constants';
 import { startCountdown } from '../../api/pomodoro/actions';
 
 interface PomodoroProps {
@@ -19,7 +19,7 @@ const Pomodoro = ({ dispatch }: PomodoroProps) => (
       dispatch(
         startCountdown({
           duration: 5000,
-          countdownType: COUNTDOWN.POMODORO,
+          countdownType: COUNTDOWN_TYPES.POMODORO,
         }),
       )
     }

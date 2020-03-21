@@ -6,7 +6,7 @@ import {
   cancelCountdown,
   startCountdown,
 } from '../../api/pomodoro/actions';
-import { COUNTDOWN } from '../../api/pomodoro/constants';
+import { COUNTDOWN_TYPES } from '../../api/pomodoro/constants';
 
 interface PomodoroCountdownProps {
   dispatch: Dispatch;
@@ -26,7 +26,7 @@ const PomodoroCountdown = ({ dispatch }: PomodoroCountdownProps) => {
           dispatch(addPomodoroItem({ description }));
           dispatch(
             startCountdown({
-              countdownType: COUNTDOWN.BREAK,
+              countdownType: COUNTDOWN_TYPES.BREAK,
               duration: 5000,
             }),
           );

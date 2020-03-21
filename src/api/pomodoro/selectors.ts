@@ -6,12 +6,12 @@ import { createSelector } from 'reselect';
 import COUNTDOWN_CONFIG from '../../configs/countdown';
 // Constants
 import * as STATE_SLICES from '../constants/state-slices';
-import { COUNTDOWN } from './constants';
+import { COUNTDOWN_TYPES } from './constants';
 
 export const getCountdownView = createSelector(
   state => selectPomodoro(state),
   ({ countdownType }) => ({
-    isCancelButtonVisible: countdownType === COUNTDOWN.POMODORO,
+    isCancelButtonVisible: countdownType === COUNTDOWN_TYPES.POMODORO,
   }),
 );
 
