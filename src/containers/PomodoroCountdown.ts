@@ -5,13 +5,15 @@ import { connect } from 'react-redux';
 // Components
 import Countdown from '../components/PomodoroCountdown/PomodoroCountdown';
 // Selectors
-import { selectPomodoro } from '../api/pomodoro/selectors';
+import { getCountdownView, selectPomodoro } from '../api/pomodoro/selectors';
 
 const mapStateToProps = (state: any) => {
   const { duration, timeInitiated } = selectPomodoro(state);
+  const { isCancelButtonVisible } = getCountdownView(state);
 
   return {
     duration,
+    isCancelButtonVisible,
     timeInitiated,
   };
 };
