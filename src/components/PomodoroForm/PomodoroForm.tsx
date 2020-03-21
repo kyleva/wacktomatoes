@@ -8,6 +8,8 @@ interface PomodoroCountdownProps {
   dispatch: Dispatch;
 }
 
+const FIVE_MINUTES = 5 * 1000 * 60;
+
 const PomodoroCountdown = ({ dispatch }: PomodoroCountdownProps) => {
   const [description, setDescription] = useState('');
 
@@ -21,7 +23,7 @@ const PomodoroCountdown = ({ dispatch }: PomodoroCountdownProps) => {
           dispatch(
             startCountdown({
               countdownType: COUNTDOWN.BREAK,
-              duration: 0.25,
+              duration: 5000,
             }),
           );
         }}

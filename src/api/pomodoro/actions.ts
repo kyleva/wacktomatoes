@@ -30,7 +30,7 @@ export const startCountdown = createAction(
   function prepare({ duration, countdownType }) {
     return {
       payload: {
-        duration: duration * 60 * 1000, // convert ms to minutes
+        duration: duration, // convert ms to minutes
         timeInitiated: Date.now(),
         countdownType,
       },
