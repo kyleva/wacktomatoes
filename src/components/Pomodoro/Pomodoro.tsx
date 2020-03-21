@@ -1,23 +1,26 @@
+/** Third party libraries */
 import React from 'react';
+import { Dispatch } from 'redux';
 
-/**
- * - isCountdownInProgress
- * - isSecondsVisible
- * - timeRemaining (ms)
- */
+/** Our code */
+import { COUNTDOWN } from '../../api/pomodoro/constants';
+import { startCountdown } from '../../api/pomodoro/actions';
 
-interface Props {
-  countdownText?: string;
-  isPomodoroInProgress?: boolean;
+interface PomodoroProps {
+  dispatch: Dispatch;
 }
 
-const Pomodoro = ({ countdownText, isPomodoroInProgress = false }: Props) => (
+const Pomodoro = ({ dispatch }: PomodoroProps) => (
   <>
-    <div className="countdown-text">
-      {isPomodoroInProgress && countdownText}
-    </div>
-
-    {!isPomodoroInProgress && <button>Start Pomodoro</button>}
+    <button
+      onClick={() =>
+        dispatch(
+          startCountdown({ duration: 0.25, countdownType: COUNTDOWN.POMODORO }),
+        )
+      }
+    >
+      Start Pomodoro
+    </button>
   </>
 );
 

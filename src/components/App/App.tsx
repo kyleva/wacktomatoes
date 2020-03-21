@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Pomodoro from '../Pomodoro/Pomodoro';
+import Home from '../../containers/Home';
 
 const App = () => (
   <>
     <header>wacktomatoes >></header>
-    <Pomodoro />
+    <Home />
   </>
 );
 
