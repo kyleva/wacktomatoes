@@ -2,8 +2,6 @@
 import { createSelector } from 'reselect';
 
 /** Our code */
-// Configs
-import COUNTDOWN_CONFIG from '../../configs/countdown';
 // Constants
 import * as STATE_SLICES from '../constants/state-slices';
 import { COUNTDOWN_TYPES } from './constants';

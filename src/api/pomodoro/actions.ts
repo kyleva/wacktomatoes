@@ -1,16 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
 
-export const addPomodoroItem = createAction(
-  'pomodoro/item/ADD',
-  function prepare({ description }) {
-    return {
-      payload: {
-        description,
-      },
-    };
-  },
-);
-
 export const cancelCountdown = createAction('pomodoro/countdown/CANCEL');
 
 export const completeCountdown = createAction(
