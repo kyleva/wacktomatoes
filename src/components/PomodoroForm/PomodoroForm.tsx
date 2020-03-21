@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { Dispatch } from 'redux';
 
-import { addPomodoroItem, startCountdown } from '../../api/pomodoro/actions';
+import {
+  addPomodoroItem,
+  cancelCountdown,
+  startCountdown,
+} from '../../api/pomodoro/actions';
 import { COUNTDOWN } from '../../api/pomodoro/constants';
 
 interface PomodoroCountdownProps {
@@ -31,6 +35,7 @@ const PomodoroCountdown = ({ dispatch }: PomodoroCountdownProps) => {
       >
         submit
       </button>
+      <button onClick={() => dispatch(cancelCountdown())}>cancel</button>
     </div>
   );
 };

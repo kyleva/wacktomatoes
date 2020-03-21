@@ -19,9 +19,8 @@ const initialState: PomodoroState = {
 };
 
 const pomodoro = createReducer(initialState, {
-  [cancelCountdown.type]: state => {
-    state.countdownType = null;
-    state.uiState = UI_STATES.INITIAL;
+  [cancelCountdown.type]: () => {
+    return initialState;
   },
 
   [completeCountdown.type]: (
