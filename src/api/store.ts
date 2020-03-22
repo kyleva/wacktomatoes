@@ -10,6 +10,15 @@ import epics from './epics';
  */
 export const rootEpic = combineEpics(...epics);
 export const rootReducer = combineReducers(reducers);
+
+/**
+ * Export RootState
+ * TODO: consider refactoring and getting dispatch type later
+ */
+declare global {
+  type RootState = ReturnType<typeof rootReducer>;
+}
+
 /**
  * Setup epic middleware w/ dependecies
  */
