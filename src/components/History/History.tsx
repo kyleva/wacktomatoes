@@ -2,7 +2,7 @@ import React from 'react';
 
 const History = ({ history }: { history: any }) => {
   const { days } = history;
-  console.log(days);
+
   return (
     <>
       {days.map((day: any) => {

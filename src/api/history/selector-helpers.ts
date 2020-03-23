@@ -9,11 +9,11 @@ export const getShortDateString = (date: Date): string => {
 };
 
 export const getDateString = (date: Date): string => {
-  const dateCompletedString = date.toLocaleString('default', {
-    month: 'long',
-    weekday: 'long',
-    year: 'numeric',
-  });
+  const dayNumber = date.toLocaleString('default', { day: '2-digit' });
+  const day = date.toLocaleString('default', { weekday: 'long' });
+  const month = date.toLocaleString('default', { month: 'long' });
+
+  const dateCompletedString = `${day}, ${month} ${dayNumber}`;
 
   return dateCompletedString;
 };
