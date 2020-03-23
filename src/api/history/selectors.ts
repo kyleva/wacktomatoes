@@ -13,14 +13,18 @@ import {
 // Types
 import { HistoryItem } from './types';
 
-interface DailyHistoryType {
-  [key: string]: {
-    title: string;
-    items: HistoryItem[];
-  };
+export interface Day {
+  date: string;
+  title: string;
+  items: HistoryItem[];
 }
 
-const getDailyHistory = (pomodoros: HistoryItem[] = []) => {
+export interface DailyHistory {
+  datesAdded: string[];
+  days: Day[];
+}
+
+const getDailyHistory = (pomodoros: HistoryItem[] = []): DailyHistory => {
   /**
    * Add history keys to new object, a la:
    * {
@@ -31,7 +35,7 @@ const getDailyHistory = (pomodoros: HistoryItem[] = []) => {
    * Each date will hold completed history items (pomodoros)
    */
   let daysWithoutHistory: object = pomodoros.reduce(
-    (acc: any, curr: any) => {
+    (acc: DailyHistory, curr: HistoryItem) => {
       const pomodoroCompletedDate = new Date(curr.timeCompleted);
       const pomodoroStartedDate = new Date(curr.timeInitiated);
       const shortDateCompletedString = getShortDateString(

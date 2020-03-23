@@ -4,7 +4,7 @@ import { selectPomodoro } from '../api/pomodoro/selectors';
 
 import Home from '../components/Home/Home';
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: RootState) => ({
   uiState: selectPomodoro(state).uiState,
 });
 

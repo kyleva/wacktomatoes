@@ -6,5 +6,7 @@ export interface HistoryItem {
   description: string;
   duration: number;
   timeCompleted: number;
+  timeCompletedString?: string;
+  timeStartedString?: string;
   timeInitiated: number;
 }

@@ -7,7 +7,7 @@ import PomodoroForm from '../components/PomodoroForm/PomodoroForm';
 // Selectors
 import { selectPomodoro } from '../api/pomodoro/selectors';
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   const { duration, timeCompleted, timeInitiated } = selectPomodoro(state);
 
   return {

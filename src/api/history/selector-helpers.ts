@@ -1,3 +1,6 @@
+import { DailyHistory, Day } from './selectors';
+import { HistoryItem } from './types';
+
 export const getShortDateString = (date: Date): string => {
   const shortDateString = date.toLocaleString('default', {
     day: '2-digit',
@@ -18,14 +21,19 @@ export const getDateString = (date: Date): string => {
   return dateCompletedString;
 };
 
-export const addPomodorosToCollection = (pomodoros: any, collection: any) => {
+export const addPomodorosToCollection = (
+  pomodoros: HistoryItem[],
+  collection: DailyHistory,
+): DailyHistory => {
   const collectionWithPomodoros = { ...collection };
 
   const sortedPomodoros = pomodoros
     .slice()
-    .sort((a: any, b: any) => b.timeInitiated - a.timeInitiated);
+    .sort(
+      (a: HistoryItem, b: HistoryItem) => b.timeInitiated - a.timeInitiated,
+    );
 
-  sortedPomodoros.forEach((pomodoro: any) => {
+  sortedPomodoros.forEach((pomodoro: HistoryItem) => {
     const timeCompleted = new Date(pomodoro.timeCompleted);
     const timeStarted = new Date(pomodoro.timeInitiated);
 
@@ -45,21 +53,14 @@ export const addPomodorosToCollection = (pomodoros: any, collection: any) => {
     };
 
     const dayToAddTo = collectionWithPomodoros.days.find(
-      (day: any) =>
+      (day: Day) =>
         day.title === getDateString(new Date(newPomodoro.timeInitiated)),
     );
 
     dayToAddTo.items.push(newPomodoro);
   });
 
-  collectionWithPomodoros.days.sort((a: any, b: any) => {
-    const date1 = new Date(a.date).getTime();
-    const date2 = new Date(b.date).getTime();
-
-    return date2 - date1;
-  });
-
-  collectionWithPomodoros.days.sort((a: any, b: any) => {
+  collectionWithPomodoros.days.sort((a: Day, b: Day) => {
     const date1 = new Date(a.date).getTime();
     const date2 = new Date(b.date).getTime();
 
