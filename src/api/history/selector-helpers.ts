@@ -29,11 +29,9 @@ export const addPomodorosToCollection = (
 
   const sortedPomodoros = pomodoros
     .slice()
-    .sort(
-      (a: HistoryItem, b: HistoryItem) => b.timeInitiated - a.timeInitiated,
-    );
+    .sort((a, b) => b.timeInitiated - a.timeInitiated);
 
-  sortedPomodoros.forEach((pomodoro: HistoryItem) => {
+  sortedPomodoros.forEach(pomodoro => {
     const timeCompleted = new Date(pomodoro.timeCompleted);
     const timeStarted = new Date(pomodoro.timeInitiated);
 
