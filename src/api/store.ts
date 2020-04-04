@@ -1,6 +1,7 @@
 import { applyMiddleware, combineReducers } from 'redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { configureStore } from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
 
 import reducers from './reducers';
 import epics from './epics';
@@ -28,7 +29,7 @@ export const epicDependencies = {
 const epicMiddleware = createEpicMiddleware({
   dependencies: epicDependencies,
 });
-const middleware = [epicMiddleware];
+const middleware = [epicMiddleware, thunk];
 
 export default function() {
   const store = configureStore({

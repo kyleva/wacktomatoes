@@ -5,6 +5,7 @@ export const COUNTDOWN_TYPES = {
 
 export const UI_STATES = {
   COUNTDOWN: 'COUNTDOWN',
+  DASHBOARD: 'DASHBOARD',
   FORM: 'FORM',
   INITIAL: 'INITIAL',
 };

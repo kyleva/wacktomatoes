@@ -1,3 +1,4 @@
+// Types
 import { DailyHistory, Day } from './selectors';
 import { HistoryItem } from './types';
 
