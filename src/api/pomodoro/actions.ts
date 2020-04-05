@@ -1,7 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
 
-export const cancelCountdown = createAction('pomodoro/countdown/CANCEL');
-
 export const completeCountdown = createAction(
   'pomodomoro/countdown/COMPLETED',
   function prepare({ uiState }) {

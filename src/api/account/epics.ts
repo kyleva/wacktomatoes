@@ -18,11 +18,12 @@ import { Observable, from, of, pipe } from 'rxjs';
 import {
   loginFetchComplete,
   loginFetchStart,
-  registerFetchComplete,
-  registerFetchStart,
+  registerComplete,
+  registerStart,
   resetPasswordComplete,
   resetPasswordStart,
 } from './actions';
+import { requestRoute } from '../navigation/actions';
 // Selectors
 import { selectAccount } from './selectors';
 
@@ -49,10 +50,10 @@ export const resetPasswordEpic: Epic = (action$, state$) =>
     map(resetPasswordComplete),
   );
 
-export const loginEpic: Epic = action$ =>
+export const loginEpic: Epic = (action$) =>
   action$.pipe(
     filter(loginFetchStart.match),
-    map(action => ({
+    map((action) => ({
       email: action.payload.email,
       password: action.payload.password,
     })),
@@ -71,7 +72,7 @@ export const loginEpic: Epic = action$ =>
 
 export const registerEpic: Epic = (action$, state$) =>
   action$.pipe(
-    filter(registerFetchStart.match),
+    filter(registerStart.match),
     withLatestFrom(state$),
     map(([action, state]) => ({
       email: action.payload.email,
@@ -86,17 +87,20 @@ export const registerEpic: Epic = (action$, state$) =>
           token,
         },
         method: 'POST',
-        url: 'http://localhost:3030/user/register',
+        url: 'http://localhost:3030/user/create',
       }),
     ),
-    map(registerFetchComplete),
+    mergeMap((response) => [
+      requestRoute({ path: '/' }),
+      registerComplete(response),
+    ]),
   );
 
-export const setTokenCookie: Epic = action$ =>
+export const setTokenCookie: Epic = (action$) =>
   action$.pipe(
     filter(loginFetchComplete.match),
-    filter(action => !Boolean(action.error)),
-    tap(action => {
+    filter((action) => !Boolean(action.error)),
+    tap((action) => {
       Cookies.set('token', action.payload.token);
     }),
     ignoreElements(),

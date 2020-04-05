@@ -3,12 +3,15 @@ import { createReducer } from '@reduxjs/toolkit';
 
 /** Our code */
 // Actions
-import { loginFetchComplete, loginFetchStart } from './actions';
+import {
+  loginFetchComplete,
+  loginFetchStart,
+  registerComplete,
+} from './actions';
 // Constants
 import * as STATUSES from '../constants/statuses';
 // Types
 import { AccountState } from './types';
-import { StateObservable } from 'redux-observable';
 
 const initialState: AccountState = {
   status: STATUSES.EMPTY,
@@ -16,7 +19,7 @@ const initialState: AccountState = {
 };
 
 const account = createReducer(initialState, {
-  [loginFetchStart.type]: state => {
+  [loginFetchStart.type]: (state) => {
     state.status = STATUSES.BUSY;
   },
 
@@ -25,6 +28,13 @@ const account = createReducer(initialState, {
       state.status = STATUSES.ERROR;
       return;
     }
+
+    state.status = STATUSES.READY;
+    state.token = action.payload.token;
+  },
+
+  [registerComplete.type]: (state, action) => {
+    if (action.error) return;
 
     state.status = STATUSES.READY;
     state.token = action.payload.token;

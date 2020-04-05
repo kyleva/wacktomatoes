@@ -4,11 +4,12 @@ import { createReducer } from '@reduxjs/toolkit';
 /** Our code */
 // Action creators
 import { cancelCountdown, completeCountdown, startCountdown } from './actions';
-import { loginFetchComplete } from '../account/actions';
+import { loginFetchComplete, registerComplete } from '../account/actions';
 // Constants
 import { UI_STATES } from './constants';
 // Types
 import { PomodoroState } from './types';
+import { retryWhen } from 'rxjs/operators';
 
 const initialState: PomodoroState = {
   countdownType: null,
@@ -41,6 +42,12 @@ const pomodoro = createReducer(initialState, {
     state,
     action: ReturnType<typeof loginFetchComplete>,
   ) => {
+    if (action.error) return;
+
+    state.uiState = UI_STATES.DASHBOARD;
+  },
+
+  [registerComplete.type]: (state, action) => {
     if (action.error) return;
 
     state.uiState = UI_STATES.DASHBOARD;

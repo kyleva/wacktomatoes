@@ -1,16 +1,26 @@
 import { applyMiddleware, combineReducers } from 'redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { configureStore } from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
+import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { createBrowserHistory } from 'history';
 
 import reducers from './reducers';
 import epics from './epics';
 
 /**
+ * Setup history
+ */
+export const history = createBrowserHistory();
+
+/**
  * Setup reducers
  */
+export const allReducers = {
+  ...reducers,
+  router: connectRouter(history),
+};
 export const rootEpic = combineEpics(...epics);
-export const rootReducer = combineReducers(reducers);
+export const rootReducer = combineReducers(allReducers);
 
 /**
  * Export RootState
@@ -29,9 +39,9 @@ export const epicDependencies = {
 const epicMiddleware = createEpicMiddleware({
   dependencies: epicDependencies,
 });
-const middleware = [epicMiddleware, thunk];
+const middleware = [routerMiddleware(history), epicMiddleware];
 
-export default function() {
+export default function () {
   const store = configureStore({
     enhancers: [applyMiddleware(...middleware)],
     reducer: rootReducer,

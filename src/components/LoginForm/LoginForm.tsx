@@ -1,6 +1,7 @@
 /** Third-party libraries */
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { Link, useRouteMatch } from 'react-router-dom';
 import React, { useState } from 'react';
 
 /** Our code */
@@ -12,6 +13,8 @@ interface LoginProps {
 }
 
 const Login = ({ dispatch }: LoginProps) => {
+  const match = useRouteMatch();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -37,7 +40,7 @@ const Login = ({ dispatch }: LoginProps) => {
 
       <hr />
       <p>
-        Don't have an account? <u>Register here</u>
+        Don't have an account? <Link to={`/register`}>Register here</Link>
       </p>
     </div>
   );

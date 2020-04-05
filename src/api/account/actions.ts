@@ -13,7 +13,7 @@ export const loginFetchStart = createAction(
   ({ email, password }) => ({ payload: { email, password } }),
 );
 
-export const registerFetchComplete = createAction(
+export const registerComplete = createAction(
   'account/REGISTER_FETCH_COMPLETED',
   ({ data, error }: { data: object; error: boolean }) => ({
     error,
@@ -21,7 +21,7 @@ export const registerFetchComplete = createAction(
   }),
 );
 
-export const registerFetchStart = createAction(
+export const registerStart = createAction(
   'account/REGISTER_FETCH_STARTED',
   ({ email, password }) => ({ payload: { email, password } }),
 );
