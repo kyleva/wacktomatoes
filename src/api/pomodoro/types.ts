@@ -1,10 +1,10 @@
-import { COUNTDOWN_TYPES, UI_STATES } from './constants';
+import { COUNTDOWN_TYPES } from './constants';
+import { UI_STATES } from '../ui/constants';
 
 export interface PomodoroState {
   countdownType: UnionOf<typeof COUNTDOWN_TYPES> | null;
   current: Pomodoro;
   list: Pomodoro[];
-  uiState: UnionOf<typeof UI_STATES>;
 }
 
 export interface Pomodoro {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Constants
-import { UI_STATES } from '../../api/pomodoro/constants';
+import { UI_STATES } from '../../api/ui/constants';
 // Containers
 import LoginForm from '../LoginForm/LoginForm';
 import Pomodoro from '../../containers/Pomodoro';
@@ -13,7 +13,7 @@ const Home = ({ uiState }: { uiState: UnionOf<typeof UI_STATES> }) => {
 
   return (
     <>
-      {(function() {
+      {(function () {
         switch (uiState) {
           case COUNTDOWN:
             return <PomodoroCountdown />;

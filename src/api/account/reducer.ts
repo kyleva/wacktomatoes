@@ -7,6 +7,7 @@ import { appStartComplete } from '../lifecycle/actions';
 import {
   loginFetchComplete,
   loginFetchStart,
+  logoutComplete,
   registerComplete,
 } from './actions';
 // Constants
@@ -45,6 +46,12 @@ const account = createReducer(initialState, {
     state.email = email;
     state.status = STATUSES.READY;
     state.token = token;
+  },
+
+  [logoutComplete.type]: (state) => {
+    state.email = null;
+    state.status = STATUSES.EMPTY;
+    state.token = null;
   },
 
   [registerComplete.type]: (state, action) => {

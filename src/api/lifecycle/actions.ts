@@ -15,8 +15,7 @@ export const appStartComplete = createAction(
 
 export const appHydrateComplete = createAction(
   'lifecycle/APP_HYDRATE_COMPLETED',
-  ({ data, error }) => {
-    console.log({ data, error });
+  ({ data, error }: { data: any; error: any }) => {
     return {
       error: Boolean(error),
       payload: error || {

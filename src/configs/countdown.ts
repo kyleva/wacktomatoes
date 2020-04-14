@@ -1,4 +1,5 @@
-import { COUNTDOWN_TYPES, UI_STATES } from '../api/pomodoro/constants';
+import { COUNTDOWN_TYPES } from '../api/pomodoro/constants';
+import { UI_STATES } from '../api/ui/constants';
 
 const COUNTDOWN_CONFIG = new Map();
 

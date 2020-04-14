@@ -3,6 +3,7 @@ import {
   filter,
   ignoreElements,
   map,
+  mapTo,
   mergeMap,
   tap,
   withLatestFrom,
@@ -15,6 +16,8 @@ import { Epic } from 'redux-observable';
 import {
   loginFetchComplete,
   loginFetchStart,
+  logoutComplete,
+  logoutStart,
   registerComplete,
   registerStart,
   resetPasswordComplete,
@@ -25,6 +28,13 @@ import { requestRoute } from '../navigation/actions';
 import { handlePromise, makeRequest } from '../epic-helpers';
 // Selectors
 import { selectAccount } from './selectors';
+
+export const logoutEpic: Epic = (action$, state$, { cookies }) =>
+  action$.pipe(
+    filter(logoutStart.match),
+    tap(() => Cookies.remove('token', { path: '/' })),
+    mapTo(logoutComplete()),
+  );
 
 export const resetPasswordEpic: Epic = (action$, state$) =>
   action$.pipe(
@@ -102,6 +112,7 @@ export const setTokenCookie: Epic = (action$) =>
     tap((action) => {
       Cookies.set('token', action.payload.token, {
         expires: 30 * 24 * 60 * 60 * 1000,
+        path: '/',
       });
     }),
     ignoreElements(),

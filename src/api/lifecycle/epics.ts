@@ -1,12 +1,15 @@
 /** Third-party libraries */
-import { Epic } from 'redux-observable';
-import { filter, map, mapTo, take, tap } from 'rxjs/operators';
+import { Epic, ofType } from 'redux-observable';
+import { filter, map, take, withLatestFrom } from 'rxjs/operators';
 
 /** Our code */
 // Actions
 import { appStart, appStartComplete, appHydrateComplete } from './actions';
+import { loginFetchComplete } from '../account/actions';
 // Helpers
 import { handlePromise, makeRequest } from '../epic-helpers';
+// Selectors
+import { selectAccount } from '../account/selectors';
 
 export const appLifecycleStart: Epic = (action$, state$, { cookies }) =>
   action$.pipe(
@@ -27,12 +30,12 @@ export const appLifecycleStart: Epic = (action$, state$, { cookies }) =>
     map(appStartComplete),
   );
 
-export const hydrateStore: Epic = (action$) =>
+export const hydrateStore: Epic = (action$, state$) =>
   action$.pipe(
-    filter(appStartComplete.match),
-    take(1),
-    map((action) => action.payload.data.token),
-    handlePromise((token) =>
+    ofType(appStartComplete.type, loginFetchComplete.type),
+    withLatestFrom(state$),
+    map(([, state]) => selectAccount(state)),
+    handlePromise(({ token }) =>
       makeRequest({
         body: {
           token,
@@ -41,6 +44,5 @@ export const hydrateStore: Epic = (action$) =>
         url: 'http://localhost:3030/pomodoro/getAllForUser', // pomodoro get by user id endpoint
       }),
     ),
-    tap((data) => console.log(data)),
     map(appHydrateComplete),
   );

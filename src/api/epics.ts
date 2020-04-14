@@ -6,6 +6,7 @@ import { requestRouteEpic as requestRoute } from './navigation/epics';
 export default [
   /** Account */
   accountEpics.loginEpic,
+  accountEpics.logoutEpic,
   accountEpics.registerEpic,
   accountEpics.setTokenCookie,
 

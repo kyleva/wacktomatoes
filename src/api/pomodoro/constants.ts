@@ -2,10 +2,3 @@ export const COUNTDOWN_TYPES = {
   BREAK: 'BREAK',
   POMODORO: 'POMODORO',
 };
-
-export const UI_STATES = {
-  COUNTDOWN: 'COUNTDOWN',
-  DASHBOARD: 'DASHBOARD',
-  FORM: 'FORM',
-  INITIAL: 'INITIAL',
-};

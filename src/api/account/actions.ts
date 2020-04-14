@@ -13,6 +13,10 @@ export const loginFetchStart = createAction(
   ({ email, password }) => ({ payload: { email, password } }),
 );
 
+export const logoutStart = createAction('account/LOGOUT_STARTED');
+
+export const logoutComplete = createAction('account/LOGOUT_COMPLETED');
+
 export const registerComplete = createAction(
   'account/REGISTER_FETCH_COMPLETED',
   ({ data, error }: { data: object; error: boolean }) => ({
