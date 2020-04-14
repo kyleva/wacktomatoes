@@ -5,6 +5,7 @@ import React from 'react';
 import Home from '../../containers/Home';
 import History from '../../containers/History';
 import RegisterForm from '../../components/RegisterForm/RegisterForm';
+import UserUtility from '../../containers/UserUtility';
 
 import { history } from '../../api/store';
 
@@ -21,6 +22,7 @@ const App = ({ history }: AppProps) => (
       </Route>
       <Route path="/">
         <>
+          <UserUtility />
           <Home />
           <hr />
           <History />

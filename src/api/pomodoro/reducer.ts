@@ -3,24 +3,57 @@ import { createReducer } from '@reduxjs/toolkit';
 
 /** Our code */
 // Action creators
-import { cancelCountdown, completeCountdown, startCountdown } from './actions';
+import {
+  addPomodoro,
+  addPomodoroComplete,
+  cancelCountdown,
+  completeCountdown,
+  startCountdown,
+} from './actions';
+import { appHydrateComplete } from '../lifecycle/actions';
 import { loginFetchComplete, registerComplete } from '../account/actions';
 // Constants
 import { UI_STATES } from './constants';
 // Types
-import { PomodoroState } from './types';
-import { retryWhen } from 'rxjs/operators';
+import { Pomodoro, PomodoroState } from './types';
 
 const initialState: PomodoroState = {
   countdownType: null,
-  description: null,
-  duration: null,
-  timeCompleted: null,
-  timeInitiated: null,
+  current: {
+    description: null,
+    duration: null,
+    endTime: null,
+    startTime: null,
+  },
+  list: [],
   uiState: UI_STATES.INITIAL,
 };
 
 const pomodoro = createReducer(initialState, {
+  [addPomodoro.type]: (state, action: ReturnType<typeof addPomodoro>) => {
+    state.current.description = action.payload.description;
+
+    const pomodoro: Pomodoro = {
+      description: action.payload.description,
+      duration: state.current.duration,
+      endTime: state.current.endTime,
+      startTime: state.current.startTime,
+    };
+
+    state.list.push(pomodoro);
+  },
+
+  [addPomodoroComplete.type]: (state) => {},
+
+  [appHydrateComplete.type]: (state, action) => {
+    const pomodoros = action.payload.data || [];
+
+    console.log({ action });
+
+    state.list = pomodoros;
+    state.uiState = UI_STATES.DASHBOARD;
+  },
+
   [cancelCountdown.type]: () => {
     return initialState;
   },
@@ -29,12 +62,12 @@ const pomodoro = createReducer(initialState, {
     state,
     action: ReturnType<typeof completeCountdown>,
   ) => {
-    const { timeCompleted, uiState } = action.payload;
+    const { uiState } = action.payload;
 
     state.countdownType = null;
-    state.description = '';
-    state.duration = null;
-    state.timeCompleted = timeCompleted;
+    state.current.description = '';
+    state.current.duration = null;
+    state.current.endTime = Date.now();
     state.uiState = uiState;
   },
 
@@ -54,11 +87,11 @@ const pomodoro = createReducer(initialState, {
   },
 
   [startCountdown.type]: (state, action: ReturnType<typeof startCountdown>) => {
-    const { duration, timeInitiated, countdownType } = action.payload;
+    const { countdownType, duration } = action.payload;
 
-    state.duration = duration;
-    state.timeInitiated = timeInitiated;
     state.countdownType = countdownType;
+    state.current.duration = duration;
+    state.current.startTime = Date.now();
     state.uiState = UI_STATES.COUNTDOWN;
   },
 });

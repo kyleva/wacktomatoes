@@ -3,7 +3,7 @@ import { COUNTDOWN_TYPES, UI_STATES } from '../api/pomodoro/constants';
 const COUNTDOWN_CONFIG = new Map();
 
 COUNTDOWN_CONFIG.set(COUNTDOWN_TYPES.BREAK, {
-  completedState: UI_STATES.INITIAL,
+  completedState: UI_STATES.DASHBOARD,
 });
 
 COUNTDOWN_CONFIG.set(COUNTDOWN_TYPES.POMODORO, {

@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 
-import { getHistoryView } from '../api/history/selectors';
+import { getPomodorosByDay } from '../api/pomodoro/selectors';
 
 import History from '../components/History/History';
 
 const mapStateToProps = (state: RootState) => ({
-  history: getHistoryView(state).history,
+  pomodoros: getPomodorosByDay(state),
 });
 
 export default connect(mapStateToProps)(History);

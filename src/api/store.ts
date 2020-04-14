@@ -1,11 +1,18 @@
+/** Third-party dependencies */
 import { applyMiddleware, combineReducers } from 'redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { configureStore } from '@reduxjs/toolkit';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
+import Cookies from 'js-cookie';
 import { createBrowserHistory } from 'history';
 
-import reducers from './reducers';
+/** Our code */
+// Actions
+import { appStart } from './lifecycle/actions';
+// Middlewares
 import epics from './epics';
+// Reducers
+import reducers from './reducers';
 
 /**
  * Setup history
@@ -34,6 +41,7 @@ declare global {
  * Setup epic middleware w/ dependecies
  */
 export const epicDependencies = {
+  cookies: Cookies,
   window,
 };
 const epicMiddleware = createEpicMiddleware({
@@ -48,6 +56,8 @@ export default function () {
   });
 
   epicMiddleware.run(rootEpic);
+
+  store.dispatch(appStart());
 
   return store;
 }

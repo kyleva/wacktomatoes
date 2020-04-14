@@ -1,7 +1,5 @@
 /** Third-party libraries */
-import { ajax, AjaxResponse } from 'rxjs/ajax';
 import {
-  catchError,
   filter,
   ignoreElements,
   map,
@@ -11,7 +9,6 @@ import {
 } from 'rxjs/operators';
 import Cookies from 'js-cookie';
 import { Epic } from 'redux-observable';
-import { Observable, from, of, pipe } from 'rxjs';
 
 /** Our code */
 // Actions
@@ -24,6 +21,8 @@ import {
   resetPasswordStart,
 } from './actions';
 import { requestRoute } from '../navigation/actions';
+// Helpers
+import { handlePromise, makeRequest } from '../epic-helpers';
 // Selectors
 import { selectAccount } from './selectors';
 
@@ -101,39 +100,9 @@ export const setTokenCookie: Epic = (action$) =>
     filter(loginFetchComplete.match),
     filter((action) => !Boolean(action.error)),
     tap((action) => {
-      Cookies.set('token', action.payload.token);
+      Cookies.set('token', action.payload.token, {
+        expires: 30 * 24 * 60 * 60 * 1000,
+      });
     }),
     ignoreElements(),
-  );
-
-/**
- * @todo Automatically add token using handlePromise operator
- */
-const makeRequest = ({
-  body,
-  method,
-  token,
-  url,
-}: {
-  body: any;
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
-  token?: string;
-  url: string;
-}) =>
-  ajax({
-    body,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    method,
-    url,
-  });
-
-const handlePromise = (
-  promiseFunction: (args: any) => Observable<AjaxResponse>,
-) =>
-  pipe(
-    mergeMap((args: object) => from(promiseFunction(args))),
-    mergeMap(({ response }) => of(response)),
-    catchError(({ response }) => of(response)),
   );

@@ -8,13 +8,13 @@ import Countdown from '../components/PomodoroCountdown/PomodoroCountdown';
 import { getCountdownView, selectPomodoro } from '../api/pomodoro/selectors';
 
 const mapStateToProps = (state: RootState) => {
-  const { duration, timeInitiated } = selectPomodoro(state);
+  const { duration, startTime } = selectPomodoro(state).current;
   const { isCancelButtonVisible } = getCountdownView(state);
 
   return {
     duration,
     isCancelButtonVisible,
-    timeInitiated,
+    startTime,
   };
 };
 

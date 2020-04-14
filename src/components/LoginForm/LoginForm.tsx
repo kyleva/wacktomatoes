@@ -13,8 +13,6 @@ interface LoginProps {
 }
 
 const Login = ({ dispatch }: LoginProps) => {
-  const match = useRouteMatch();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -24,14 +22,14 @@ const Login = ({ dispatch }: LoginProps) => {
       <input
         id="input-email"
         type="text"
-        onChange={e => setEmail(e.target.value)}
+        onChange={(e) => setEmail(e.target.value)}
       />
 
       <label htmlFor="input-password">Password</label>
       <input
         id="input-password"
         type="password"
-        onChange={e => setPassword(e.target.value)}
+        onChange={(e) => setPassword(e.target.value)}
       />
 
       <button onClick={() => dispatch(loginFetchStart({ email, password }))}>

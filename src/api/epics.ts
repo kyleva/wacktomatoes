@@ -1,5 +1,6 @@
 import * as accountEpics from './account/epics';
-import { countdownEpic as countdown } from './pomodoro/epics';
+import * as lifecycleEpics from './lifecycle/epics';
+import * as pomodoroEpics from './pomodoro/epics';
 import { requestRouteEpic as requestRoute } from './navigation/epics';
 
 export default [
@@ -8,8 +9,13 @@ export default [
   accountEpics.registerEpic,
   accountEpics.setTokenCookie,
 
+  /** Lifecycle */
+  lifecycleEpics.appLifecycleStart,
+  lifecycleEpics.hydrateStore,
+
   /** Countdown */
-  countdown,
+  pomodoroEpics.countdownEpic,
+  pomodoroEpics.addPomodoroEpic,
 
   /** Navigation */
   requestRoute,

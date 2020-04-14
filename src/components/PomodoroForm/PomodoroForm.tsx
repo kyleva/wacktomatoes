@@ -4,40 +4,33 @@ import { Dispatch } from 'redux';
 
 /** Our code */
 // Actions
-import { addPomodoro } from '../../api/history/actions';
-import { cancelCountdown, startCountdown } from '../../api/pomodoro/actions';
+import {
+  addPomodoro,
+  cancelCountdown,
+  startCountdown,
+} from '../../api/pomodoro/actions';
 // Constants
 import { COUNTDOWN_TYPES } from '../../api/pomodoro/constants';
 
 interface PomodoroCountdownProps {
   dispatch: Dispatch;
-  duration: number;
-  timeCompleted: number;
-  timeInitiated: number;
 }
 
-const FIVE_MINUTES = 5 * 1000 * 60;
-
-const PomodoroCountdown = ({
-  dispatch,
-  duration,
-  timeCompleted,
-  timeInitiated,
-}: PomodoroCountdownProps) => {
+const PomodoroForm = ({ dispatch }: PomodoroCountdownProps) => {
   const [description, setDescription] = useState('');
 
   return (
     <div>
       What did you do?
-      <input type="text" onChange={e => setDescription(e.target.value)}></input>
+      <input
+        type="text"
+        onChange={(e) => setDescription(e.target.value)}
+      ></input>
       <button
         onClick={() => {
           dispatch(
             addPomodoro({
               description,
-              duration,
-              timeCompleted,
-              timeInitiated,
             }),
           );
           dispatch(
@@ -56,4 +49,4 @@ const PomodoroCountdown = ({
   );
 };
 
-export default PomodoroCountdown;
+export default PomodoroForm;

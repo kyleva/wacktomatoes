@@ -7,13 +7,15 @@ const THIRTY_SECONDS = ONE_MINUTE / 2;
 
 export const getCountdownText = ({
   duration,
-  timeInitiated,
+  startTime,
 }: {
   duration: number;
-  timeInitiated: number;
+  startTime: number;
 }) => {
-  const timeSinceInitiated = Date.now() - timeInitiated;
+  const timeSinceInitiated = Date.now() - new Date(startTime).getTime();
   const timeRemaining = duration - timeSinceInitiated;
+
+  console.log(timeRemaining);
 
   const { minutes, seconds } = getMinutesSecondsFromMilliseconds(timeRemaining);
   const countdownTextTemplate = getCountdownTextTemplate({
@@ -28,8 +30,6 @@ export const getCountdownText = ({
 };
 
 const getCountdownTextTemplate = ({
-  minutes,
-  seconds,
   timeRemaining,
 }: {
   minutes: number;

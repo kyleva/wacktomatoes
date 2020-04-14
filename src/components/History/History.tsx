@@ -1,16 +1,32 @@
+/** Third-party dependencies */
 import React from 'react';
 
-import { DailyHistory, Day } from 'src/api/history/selectors';
-import { HistoryItem } from 'src/api/history/types';
+/** Our code */
+import { Pomodoro, SortedPomodoros } from 'src/api/pomodoro/types';
 
-const History = ({ history }: { history: DailyHistory }) => {
-  const { days } = history;
+const History = ({ pomodoros }: { pomodoros: SortedPomodoros }) => {
+  const days = Object.keys(pomodoros);
 
-  return <>{days.map(DaySection)}</>;
+  return days.map((dateString: any) => {
+    const day = pomodoros[dateString];
+    return (
+      <DaySection
+        key={dateString}
+        items={day.items}
+        title={day.title}
+      ></DaySection>
+    );
+  });
 };
 
-export const DaySection = ({ date, title, items }: Day) => (
-  <div key={date}>
+export const DaySection = ({
+  title,
+  items,
+}: {
+  items: Pomodoro[];
+  title: string;
+}) => (
+  <div>
     <h4>
       {title}
       <br />
@@ -20,11 +36,11 @@ export const DaySection = ({ date, title, items }: Day) => (
   </div>
 );
 
-export const PomodoroItem = (pomodoro: HistoryItem) => (
-  <li key={pomodoro.timeInitiated}>
+export const PomodoroItem = (pomodoro: Pomodoro) => (
+  <li key={pomodoro.startTime}>
     <span
       style={{ color: '#7d7d7d' }}
-    >{`${pomodoro.timeStartedString} - ${pomodoro.timeCompletedString}`}</span>{' '}
+    >{`${pomodoro.startTimeString} - ${pomodoro.endTimeString}`}</span>{' '}
     {pomodoro.description}
   </li>
 );

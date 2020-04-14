@@ -14,20 +14,20 @@ interface PomodoroCountdownProps {
   dispatch: Dispatch;
   duration: number;
   isCancelButtonVisible: boolean;
-  timeInitiated: number;
+  startTime: number;
 }
 
 const PomodoroCountdown = ({
   dispatch,
   duration,
   isCancelButtonVisible = false,
-  timeInitiated,
+  startTime,
 }: PomodoroCountdownProps) => {
-  const initialCountdownText = getCountdownText({ duration, timeInitiated });
+  const initialCountdownText = getCountdownText({ duration, startTime });
   const [countdownText, setCountdownText] = useState(initialCountdownText);
 
   useInterval(() => {
-    setCountdownText(getCountdownText({ duration, timeInitiated }));
+    setCountdownText(getCountdownText({ duration, startTime }));
   }, 1000);
 
   return (
