@@ -59,7 +59,7 @@ export const resetPasswordEpic: Epic = (action$, state$) =>
     map(resetPasswordComplete),
   );
 
-export const loginEpic: Epic = (action$) =>
+export const loginEpic: Epic = (action$, state$) =>
   action$.pipe(
     filter(loginFetchStart.match),
     map((action) => ({
@@ -67,14 +67,17 @@ export const loginEpic: Epic = (action$) =>
       password: action.payload.password,
     })),
     handlePromise(({ email, password }) => {
-      return makeRequest({
-        body: {
-          email,
-          password,
+      return makeRequest(
+        {
+          body: {
+            email,
+            password,
+          },
+          method: 'POST',
+          url: 'http://localhost:3030/user/login',
         },
-        method: 'POST',
-        url: 'http://localhost:3030/user/login',
-      });
+        state$,
+      );
     }),
     map(loginFetchComplete),
   );

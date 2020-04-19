@@ -12,7 +12,7 @@ export const makeRequest = ({
   token,
   url,
 }: {
-  body: any;
+  body?: any;
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   token?: string;
   url: string;
@@ -21,6 +21,9 @@ export const makeRequest = ({
     body,
     headers: {
       'Content-Type': 'application/json',
+      ...(token && {
+        Authorization: `Bearer ${token}`,
+      }),
     },
     method,
     url,

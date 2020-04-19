@@ -19,10 +19,8 @@ export const appLifecycleStart: Epic = (action$, state$, { cookies }) =>
     filter((tokenExists) => Boolean(tokenExists)),
     handlePromise((token) => {
       return makeRequest({
-        body: {
-          token,
-        },
         method: 'POST',
+        token,
         url: 'http://localhost:3030/user/verify', // token validation endpoint
       });
     }),
@@ -38,10 +36,8 @@ export const hydrateStore: Epic = (action$, state$) =>
     map(([, state]) => selectAccount(state)),
     handlePromise(({ token }) =>
       makeRequest({
-        body: {
-          token,
-        },
         method: 'POST',
+        token,
         url: 'http://localhost:3030/pomodoro/getAllForUser', // pomodoro get by user id endpoint
       }),
     ),
