@@ -1,6 +1,6 @@
 /** Third-party libraries */
 import { ajax, AjaxResponse } from 'rxjs/ajax';
-import { catchError, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, from, of, pipe } from 'rxjs';
 
 /**
@@ -30,7 +30,10 @@ export const handlePromise = (
   promiseFunction: (args: any) => Observable<AjaxResponse>,
 ) =>
   pipe(
-    mergeMap((args: object) => from(promiseFunction(args))),
-    mergeMap(({ response }) => of(response)),
-    catchError(({ response }) => of(response)),
+    mergeMap((args) =>
+      from(promiseFunction(args)).pipe(
+        map(({ response }) => response),
+        catchError(({ response }) => of(response)),
+      ),
+    ),
   );

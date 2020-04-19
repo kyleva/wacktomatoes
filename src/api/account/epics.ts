@@ -1,4 +1,6 @@
 /** Third-party libraries */
+import Cookies from 'js-cookie';
+import { Epic } from 'redux-observable';
 import {
   filter,
   ignoreElements,
@@ -8,8 +10,6 @@ import {
   tap,
   withLatestFrom,
 } from 'rxjs/operators';
-import Cookies from 'js-cookie';
-import { Epic } from 'redux-observable';
 
 /** Our code */
 // Actions
@@ -66,16 +66,16 @@ export const loginEpic: Epic = (action$) =>
       email: action.payload.email,
       password: action.payload.password,
     })),
-    handlePromise(({ email, password }) =>
-      makeRequest({
+    handlePromise(({ email, password }) => {
+      return makeRequest({
         body: {
           email,
           password,
         },
         method: 'POST',
         url: 'http://localhost:3030/user/login',
-      }),
-    ),
+      });
+    }),
     map(loginFetchComplete),
   );
 

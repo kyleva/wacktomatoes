@@ -33,6 +33,7 @@ export const appLifecycleStart: Epic = (action$, state$, { cookies }) =>
 export const hydrateStore: Epic = (action$, state$) =>
   action$.pipe(
     ofType(appStartComplete.type, loginFetchComplete.type),
+    filter((action) => !Boolean(action.error)),
     withLatestFrom(state$),
     map(([, state]) => selectAccount(state)),
     handlePromise(({ token }) =>
