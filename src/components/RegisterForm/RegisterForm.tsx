@@ -1,8 +1,10 @@
 /** Third-party libraries */
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
+import * as Yup from 'yup';
 
 /** Our code */
 // Actions
@@ -13,67 +15,44 @@ interface RegisterFormProps {
 }
 
 const RegisterForm = ({ dispatch }: RegisterFormProps) => {
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const formIsValid = () => {
-    const fields = [confirmPassword, email, password];
-
-    // if any fields are empty don't submit
-    if (fields.some(field => field === '')) {
-      return false;
-    }
-
-    // if password fields are not equal dont submit
-    if (password !== confirmPassword) {
-      return false;
-    }
-
-    return true;
-  };
-
   return (
-    <div className="account-form">
-      <label htmlFor="input-email">Email</label>
-      <input
-        id="input-email"
-        type="text"
-        onChange={e => setEmail(e.target.value)}
-        value={email}
-      />
+    <Formik
+      initialValues={{ confirmEmail: '', email: '', password: '' }}
+      onSubmit={({ email, password }) => {
+        dispatch(registerStart({ email, password }));
+      }}
+      validationSchema={Yup.object({
+        confirmEmail: Yup.string()
+          .email()
+          .oneOf([Yup.ref('email'), null], 'Passwords must match')
+          .required(),
+        email: Yup.string().email().required(),
+        password: Yup.string().required(),
+      })}
+    >
+      <>
+        <Form>
+          <label htmlFor="email">Email</label>
+          <Field name="email" type="text" />
+          <ErrorMessage name="email" />
 
-      <label htmlFor="input-password">Password</label>
-      <input
-        id="input-password"
-        type="password"
-        onChange={e => setPassword(e.target.value)}
-        value={password}
-      />
+          <label htmlFor="confirmEmail">Confirm Email</label>
+          <Field name="confirmEmail" type="text" />
+          <ErrorMessage name="confirmEmail" />
 
-      <label htmlFor="input-confirm-password">Confirm Password</label>
-      <input
-        id="input-confirm-password"
-        type="password"
-        onChange={e => setConfirmPassword(e.target.value)}
-        value={confirmPassword}
-      />
+          <label htmlFor="password">Password</label>
+          <Field name="password" type="password" />
+          <ErrorMessage name="password" />
 
-      <button
-        onClick={() => {
-          if (formIsValid()) {
-            dispatch(registerStart({ email, password }));
-          }
-        }}
-      >
-        Register
-      </button>
+          <button type="submit">Register</button>
+        </Form>
 
-      <hr />
-      <p>
-        Already have an account? <Link to="/">Login here.</Link>
-      </p>
-    </div>
+        <hr />
+        <p>
+          Already have an account? <Link to="/">Login here.</Link>
+        </p>
+      </>
+    </Formik>
   );
 };
 

@@ -1,6 +1,8 @@
 /** Third-party libraries */
-import React, { useState } from 'react';
 import { Dispatch } from 'redux';
+import { ErrorMessage, Field, Form, Formik, yupToFormErrors } from 'formik';
+import React from 'react';
+import * as Yup from 'yup';
 
 /** Our code */
 // Actions
@@ -17,35 +19,28 @@ interface PomodoroCountdownProps {
 }
 
 const PomodoroForm = ({ dispatch }: PomodoroCountdownProps) => {
-  const [description, setDescription] = useState('');
-
   return (
-    <div>
-      What did you do?
-      <input
-        type="text"
-        onChange={(e) => setDescription(e.target.value)}
-      ></input>
-      <button
-        onClick={() => {
-          dispatch(
-            addPomodoro({
-              description,
-            }),
-          );
-          dispatch(
-            startCountdown({
-              countdownType: COUNTDOWN_TYPES.BREAK,
-              duration: 5000,
-            }),
-          );
-        }}
-        value={description}
-      >
-        submit
-      </button>
-      <button onClick={() => dispatch(cancelCountdown())}>cancel</button>
-    </div>
+    <Formik
+      initialValues={{ description: '' }}
+      onSubmit={({ description }) => {
+        dispatch(addPomodoro({ description }));
+        dispatch(
+          startCountdown({
+            countdownType: COUNTDOWN_TYPES.BREAK,
+            duration: 5000,
+          }),
+        );
+      }}
+      validationSchema={Yup.object({ description: Yup.string().required() })}
+    >
+      <Form>
+        <Field name="description" type="text" />
+        <ErrorMessage name="description" />
+
+        <button type="submit">Submit</button>
+        <button onClick={() => dispatch(cancelCountdown())}>Cancel</button>
+      </Form>
+    </Formik>
   );
 };
 

@@ -1,8 +1,10 @@
 /** Third-party libraries */
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
+import * as Yup from 'yup';
 
 /** Our code */
 // Actions
@@ -13,34 +15,36 @@ interface LoginProps {
 }
 
 const Login = ({ dispatch }: LoginProps) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
   return (
-    <div className="account-form">
-      <label htmlFor="input-email">Email</label>
-      <input
-        id="input-email"
-        type="text"
-        onChange={(e) => setEmail(e.target.value)}
-      />
+    <Formik
+      initialValues={{ email: '', password: '' }}
+      validationSchema={Yup.object({
+        email: Yup.string().required(),
+        password: Yup.string().required(),
+      })}
+      onSubmit={({ email, password }) => {
+        dispatch(loginFetchStart({ email, password }));
+      }}
+    >
+      <>
+        <Form>
+          <label htmlFor="email">Email</label>
+          <Field name="email" type="text" />
+          <ErrorMessage name="email" />
 
-      <label htmlFor="input-password">Password</label>
-      <input
-        id="input-password"
-        type="password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
+          <label htmlFor="password">Password</label>
+          <Field name="password" type="password" />
+          <ErrorMessage name="password" />
 
-      <button onClick={() => dispatch(loginFetchStart({ email, password }))}>
-        Login
-      </button>
+          <button type="submit">Login</button>
+        </Form>
 
-      <hr />
-      <p>
-        Don't have an account? <Link to={`/register`}>Register here</Link>
-      </p>
-    </div>
+        <hr />
+        <p>
+          Don't have an account? <Link to={`/register`}>Register here</Link>
+        </p>
+      </>
+    </Formik>
   );
 };
 
