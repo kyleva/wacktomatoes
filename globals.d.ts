@@ -6,4 +6,9 @@ declare namespace JSX {
   }
 }
 
+declare module '*.mp3' {
+  const src: string;
+  export default src;
+}
+
 declare type UnionOf<T> = T[keyof T];

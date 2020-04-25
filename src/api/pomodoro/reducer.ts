@@ -48,8 +48,14 @@ const pomodoro = createReducer(initialState, {
     state.list = pomodoros;
   },
 
-  [cancelCountdown.type]: () => {
-    return initialState;
+  [cancelCountdown.type]: (state) => {
+    state.countdownType = null;
+    state.current = {
+      description: null,
+      duration: null,
+      endTime: null,
+      startTime: null,
+    };
   },
 
   [completeCountdown.type]: (state) => {

@@ -17,6 +17,8 @@ export default [
   /** Countdown */
   pomodoroEpics.countdownEpic,
   pomodoroEpics.addPomodoroEpic,
+  pomodoroEpics.loadAudioCountdownStartEpic,
+  pomodoroEpics.playAudioCountdownCompleteEpic,
 
   /** Navigation */
   requestRoute,

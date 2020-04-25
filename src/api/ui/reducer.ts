@@ -28,8 +28,8 @@ const ui = createReducer(initialState, {
     state.uiState = UI_STATES.DASHBOARD;
   },
 
-  [cancelCountdown.type]: () => {
-    return initialState;
+  [cancelCountdown.type]: (state) => {
+    state.uiState = UI_STATES.DASHBOARD;
   },
 
   [completeCountdown.type]: (

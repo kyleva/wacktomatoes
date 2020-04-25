@@ -3,9 +3,11 @@ import { Epic, ofType } from 'redux-observable';
 import { race, timer } from 'rxjs';
 import {
   filter,
+  first,
   ignoreElements,
   map,
   switchMap,
+  tap,
   withLatestFrom,
 } from 'rxjs/operators';
 
@@ -25,12 +27,16 @@ import { handlePromise, makeRequest } from '../epic-helpers';
 // Selectors
 import { selectAccount } from '../account/selectors';
 import { selectPomodoro } from './selectors';
+// Sounds
+import alarmSound from '../../assets/audio/alarm-bell.mp3';
+
+let countdownCompletedSound: HTMLAudioElement | undefined;
 
 export const addPomodoroEpic: Epic = (action$, state$) =>
   action$.pipe(
     filter(addPomodoro.match),
     withLatestFrom(state$),
-    map(([action, state]) => ({
+    map(([, state]) => ({
       ...selectPomodoro(state),
       token: selectAccount(state).token,
     })),
@@ -77,6 +83,26 @@ export const countdownEpic: Epic = (action$, state$) => {
   );
 };
 
+export const loadAudioCountdownStartEpic: Epic = (action$) =>
+  action$.pipe(
+    filter(startCountdown.match),
+    first(),
+    tap(() => {
+      countdownCompletedSound = new Audio(alarmSound);
+    }),
+    ignoreElements(),
+  );
+
+export const playAudioCountdownCompleteEpic: Epic = (action$) =>
+  action$.pipe(
+    filter(completeCountdown.match),
+    tap(() => countdownCompletedSound.play()),
+    ignoreElements(),
+  );
+
 export default {
+  addPomodoroEpic,
   countdownEpic,
+  loadAudioCountdownStartEpic,
+  playAudioCountdownCompleteEpic,
 };

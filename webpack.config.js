@@ -18,6 +18,12 @@ module.exports = {
         },
       },
       {
+        test: /\.(mp3)$/i,
+        use: {
+          loader: 'file-loader',
+        },
+      },
+      {
         test: /\.html$/,
         use: {
           loader: 'html-loader',
