@@ -1,0 +1,10 @@
+{
+  "diff": true,
+  "extension": ["js", "ts", "tsx"],
+  "package": "../package.json",
+  "reporter": "spec",
+  "require": "./test/babel-register",
+  "slow": 75,
+  "timeout": 9000,
+  "ui": "bdd"
+}
