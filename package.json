@@ -6,8 +6,8 @@
   "scripts": {
     "build": "webpack --mode production",
     "start": "webpack-dev-server --open --mode development",
-    "test:api": "mocha test/mocha-test-setup --config test/mocha-config.json src/api/**/*.spec.ts",
-    "test:react": "mocha test/mocha-test-setup --config test/mocha-config.json src/components/**/*.spec.ts src/containers/**/*.spec.ts"
+    "test:api": "mocha test/mocha-test-setup --config test/mocha-config.json src/api/**/*.spec.tsx",
+    "test:react": "mocha test/mocha-test-setup --config test/mocha-config.json src/components/**/*.spec.tsx src/containers/**/*.spec.ts"
   },
   "author": "",
   "license": "ISC",
@@ -28,6 +28,8 @@
     "@types/react-dom": "^16.9.5",
     "@types/react-redux": "^7.1.7",
     "@types/react-router-dom": "^5.1.3",
+    "@types/sinon": "^9.0.0",
+    "@types/sinon-chai": "^3.2.4",
     "@types/yup": "^0.28.0",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
