@@ -46,6 +46,7 @@ interface AppEndpoints {
   USER_RESET_PASSWORD: string;
   USER_VERIFY: string;
 }
+// TODO: get autocomplete working for endpoints
 const endpoints: AppEndpoints = environmentConfig.endpoints;
 
 /**
