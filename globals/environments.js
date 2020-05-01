@@ -1,5 +1,5 @@
 const LOCAL_URL = 'http://localhost:3030';
-const STAGING_URL = 'http://staging.url.com';
+const STAGING_URL = 'https://wacktomatoes-backend-staging.herokuapp.com';
 const PRODUCTION_URL = 'http://production.url.com';
 
 const ENVIRONMENT_CONFIGS = new Map();
