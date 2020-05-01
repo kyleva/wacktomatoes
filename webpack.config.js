@@ -7,7 +7,7 @@ const ENVIRONMENT_GLOBALS = require('./globals/environments');
 const ENVIRONMENT_CONFIGS = ENVIRONMENT_GLOBALS.ENVIRONMENT_CONFIGS;
 const ENVIRONMENTS = ENVIRONMENT_GLOBALS.ENVIRONMENTS;
 
-const environment = process.env.NODE_ENV || ENVIRONMENTS.LOCAL;
+const environment = process.env.DEPLOYMENT_ENV || ENVIRONMENTS.LOCAL;
 const environmentConfig = ENVIRONMENT_CONFIGS.get(environment);
 
 console.log(environment, environmentConfig);

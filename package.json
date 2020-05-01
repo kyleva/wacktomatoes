@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --open --mode development --experimental-modules",
+    "dev": "webpack-dev-server --open --mode development --experimental-modules",
+    "start": "node server.js",
     "test:api": "mocha test/mocha-test-setup --config test/mocha-config.json src/api/**/*.spec.tsx",
     "test:react": "mocha test/mocha-test-setup --config test/mocha-config.json src/components/**/*.spec.tsx src/containers/**/*.spec.ts"
   },
@@ -55,6 +56,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.2.5",
     "connected-react-router": "^6.8.0",
+    "express": "^4.17.1",
     "formik": "^2.1.4",
     "history": "^4.10.1",
     "js-cookie": "^2.2.1",
