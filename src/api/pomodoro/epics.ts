@@ -32,7 +32,7 @@ import alarmSound from '../../assets/audio/alarm-bell.mp3';
 
 let countdownCompletedSound: HTMLAudioElement | undefined;
 
-export const addPomodoroEpic: Epic = (action$, state$) =>
+export const addPomodoroEpic: Epic = (action$, state$, { endpoints }) =>
   action$.pipe(
     filter(addPomodoro.match),
     withLatestFrom(state$),
@@ -49,7 +49,7 @@ export const addPomodoroEpic: Epic = (action$, state$) =>
         },
         method: 'POST',
         token,
-        url: 'http://localhost:3030/pomodoro/create',
+        url: endpoints.POMODORO_CREATE,
       }),
     ),
     map(addPomodoroComplete),

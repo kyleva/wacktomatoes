@@ -9,6 +9,7 @@ import { createBrowserHistory } from 'history';
 /** Our code */
 // Actions
 import { appStart } from './lifecycle/actions';
+import { setAppConfig } from './app-config/actions';
 // Middlewares
 import epics from './epics';
 // Reducers
@@ -37,11 +38,22 @@ declare global {
   type RootState = ReturnType<typeof rootReducer>;
 }
 
+interface AppEndpoints {
+  POMODORO_CREATE: string;
+  POMODORO_GET_ALL_BY_USER: string;
+  USER_CREATE: string;
+  USER_LOGIN: string;
+  USER_RESET_PASSWORD: string;
+  USER_VERIFY: string;
+}
+const endpoints: AppEndpoints = environmentConfig.endpoints;
+
 /**
  * Setup epic middleware w/ dependecies
  */
 export const epicDependencies = {
   cookies: Cookies,
+  endpoints,
   window,
 };
 const epicMiddleware = createEpicMiddleware({
@@ -58,6 +70,8 @@ export default function () {
   epicMiddleware.run(rootEpic);
 
   store.dispatch(appStart());
+  // @ts-ignore
+  store.dispatch(setAppConfig(environmentConfig));
 
   return store;
 }

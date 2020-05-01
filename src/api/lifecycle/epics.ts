@@ -11,7 +11,11 @@ import { handlePromise, makeRequest } from '../epic-helpers';
 // Selectors
 import { selectAccount } from '../account/selectors';
 
-export const appLifecycleStart: Epic = (action$, state$, { cookies }) =>
+export const appLifecycleStart: Epic = (
+  action$,
+  state$,
+  { cookies, endpoints },
+) =>
   action$.pipe(
     filter(appStart.match),
     take(1),
@@ -21,14 +25,14 @@ export const appLifecycleStart: Epic = (action$, state$, { cookies }) =>
       return makeRequest({
         method: 'POST',
         token,
-        url: 'http://localhost:3030/user/verify', // token validation endpoint
+        url: endpoints.USER_VERIFY,
       });
     }),
     filter((response: any) => !Boolean(response.error)),
     map(appStartComplete),
   );
 
-export const hydrateStore: Epic = (action$, state$) =>
+export const hydrateStore: Epic = (action$, state$, { endpoints }) =>
   action$.pipe(
     ofType(appStartComplete.type, loginFetchComplete.type),
     filter((action) => !Boolean(action.error)),
@@ -38,7 +42,7 @@ export const hydrateStore: Epic = (action$, state$) =>
       makeRequest({
         method: 'POST',
         token,
-        url: 'http://localhost:3030/pomodoro/getAllForUser', // pomodoro get by user id endpoint
+        url: endpoints.POMODORO_GET_ALL_BY_USER,
       }),
     ),
     map(appHydrateComplete),

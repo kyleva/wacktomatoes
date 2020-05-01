@@ -1,6 +1,16 @@
+/* Third-party libraries */
 const path = require('path');
-
 const htmlWebpackPlugin = require('html-webpack-plugin');
+
+/** Our code */
+const ENVIRONMENT_GLOBALS = require('./globals/environments');
+const ENVIRONMENT_CONFIGS = ENVIRONMENT_GLOBALS.ENVIRONMENT_CONFIGS;
+const ENVIRONMENTS = ENVIRONMENT_GLOBALS.ENVIRONMENTS;
+
+const environment = process.env.NODE_ENV || ENVIRONMENTS.LOCAL;
+const environmentConfig = ENVIRONMENT_CONFIGS.get(environment);
+
+console.log(environment, environmentConfig);
 
 module.exports = {
   devServer: {
@@ -33,7 +43,8 @@ module.exports = {
   },
   plugins: [
     new htmlWebpackPlugin({
-      template: './public/index.html',
+      template: './public/index.ejs',
+      templateParameters: { environmentConfig },
       filename: './index.html',
     }),
   ],

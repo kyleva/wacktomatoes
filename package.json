@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --open --mode development",
+    "start": "webpack-dev-server --open --mode development --experimental-modules",
     "test:api": "mocha test/mocha-test-setup --config test/mocha-config.json src/api/**/*.spec.tsx",
     "test:react": "mocha test/mocha-test-setup --config test/mocha-config.json src/components/**/*.spec.tsx src/containers/**/*.spec.ts"
   },
@@ -35,6 +36,7 @@
     "@typescript-eslint/parser": "^2.30.0",
     "babel-loader": "^8.0.6",
     "chai": "^4.2.0",
+    "cross-env": "^7.0.2",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.8.0",

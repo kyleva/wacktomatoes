@@ -36,7 +36,7 @@ export const logoutEpic: Epic = (action$, state$, { cookies }) =>
     mapTo(logoutComplete()),
   );
 
-export const resetPasswordEpic: Epic = (action$, state$) =>
+export const resetPasswordEpic: Epic = (action$, state$, { endpoints }) =>
   action$.pipe(
     filter(resetPasswordStart.match),
     withLatestFrom(state$),
@@ -53,13 +53,13 @@ export const resetPasswordEpic: Epic = (action$, state$) =>
         },
         method: 'POST',
         token,
-        url: 'http://localhost:3030/user/reset-password',
+        url: endpoints.USER_RESET_PASSWORD,
       }),
     ),
     map(resetPasswordComplete),
   );
 
-export const loginEpic: Epic = (action$, state$) =>
+export const loginEpic: Epic = (action$, state$, { endpoints }) =>
   action$.pipe(
     filter(loginFetchStart.match),
     map((action) => ({
@@ -67,22 +67,19 @@ export const loginEpic: Epic = (action$, state$) =>
       password: action.payload.password,
     })),
     handlePromise(({ email, password }) => {
-      return makeRequest(
-        {
-          body: {
-            email,
-            password,
-          },
-          method: 'POST',
-          url: 'http://localhost:3030/user/login',
+      return makeRequest({
+        body: {
+          email,
+          password,
         },
-        state$,
-      );
+        method: 'POST',
+        url: endpoints.USER_LOGIN,
+      });
     }),
     map(loginFetchComplete),
   );
 
-export const registerEpic: Epic = (action$, state$) =>
+export const registerEpic: Epic = (action$, state$, { endpoints }) =>
   action$.pipe(
     filter(registerStart.match),
     withLatestFrom(state$),
@@ -99,7 +96,7 @@ export const registerEpic: Epic = (action$, state$) =>
           token,
         },
         method: 'POST',
-        url: 'http://localhost:3030/user/create',
+        url: endpoints.USER_CREATE,
       }),
     ),
     mergeMap((response) => [
