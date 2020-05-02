@@ -27,7 +27,7 @@ const PomodoroForm = ({ dispatch }: PomodoroCountdownProps) => {
         dispatch(
           startCountdown({
             countdownType: COUNTDOWN_TYPES.BREAK,
-            duration: 5000,
+            duration: 1000 * 60 * 5,
           }),
         );
       }}
