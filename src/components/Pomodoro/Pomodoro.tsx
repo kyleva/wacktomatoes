@@ -18,7 +18,7 @@ const Pomodoro = ({ dispatch }: PomodoroProps) => (
     onClick={() =>
       dispatch(
         startCountdown({
-          duration: 5000,
+          duration: 20000,
           countdownType: COUNTDOWN_TYPES.POMODORO,
         }),
       )
